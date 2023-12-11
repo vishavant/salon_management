@@ -31,6 +31,8 @@
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
+                    
+                  <th scope="col" class="sort" data-sort="image">Date</th>
                   <th scope="col" class="sort" data-sort="image">Name</th>
                   {% comment %} <th scope="col" class="sort" data-sort="name">Service Name</th> {% endcomment %}
                   <th scope="col" class="sort" data-sort="category">Phone</th>
@@ -42,6 +44,7 @@
               <tbody class="list">
                 <tr>
                     {% for booking in bookings %}
+                <td>{{ booking.created_at|date:"d-m-Y" }}</td>
                   <th scope="row">
                     <a href="{% url 'salon:booking_detail' booking.pk %}">{{ booking.name }}</a>
                   </th>
