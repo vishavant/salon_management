@@ -1,0 +1,16 @@
+<!-- service_package_detail.html -->
+
+<h2>Service Package Details</h2>
+
+<p><strong>Name:</strong> {{ service_package.package_name }}</p>
+<p><strong>Services:</strong> {% for service in service_package.services.all %}{{ service.service_name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+<p><strong>Price:</strong> ${{ service_package.price }}</p>
+{% if service_package.thumbanail %}
+    <p><strong>Thumbnail:</strong> <img src="{{ service_package.thumbanail.url }}" alt="{{ service_package.package_name }}" height="100"></p>
+{% endif %}
+<p><strong>Created At:</strong> {{ service_package.created_at }}</p>
+<p><strong>Updated At:</strong> {{ service_package.updated_at }}</p>
+
+<a href="{% url 'salon:service_package_update' service_package.pk %}">Update</a>
+<a href="{% url 'salon:service_package_delete' service_package.pk %}">Delete</a>
+<a href="{% url 'salon:service_package_list' %}">Back to List</a>

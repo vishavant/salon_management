@@ -1,0 +1,46 @@
+<!-- booking_detail.html -->
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Booking
+{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card">
+        
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h4>Booking Profile</h4>
+                    <hr>
+                    <p><strong>Name:</strong> <b>{{ booking.name }}</b></p>
+                    <p><strong>Phone:</strong> {{ booking.phone }}</p>
+                    <p><strong>Gender:</strong> {{ booking.gender }}</p>
+                    <p><strong>Date of Birth:</strong> {{ booking.dob }}</p>
+                    <p><strong>Created At:</strong> {{ booking.created_at }}</p>
+                    <p><strong>Updated At:</strong> {{ booking.updated_at }}</p>
+                </div>
+                <strong></strong>
+                <div class="col-sm-7">
+                    <h4>Service and Other information</h4>
+                    <hr>
+                    
+                    <p><strong>Services:</strong> <span class="badge badge-sm bg-gradient-success">{% for service in booking.service.all %}{{ service.service_name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span></p>  
+                    <p><strong>Location:</strong> {{ booking.location }}</p>
+                    <p><strong>Booking Source:</strong> {{ booking.booking_source }}</p>
+                    <p><strong>Assigned Person:</strong> {{ booking.assigned_person.name }}</p>
+                    <p><strong>Service Amount:</strong> {{ booking.service_amount }}</p>
+                    <p><strong>Remark:</strong> {{ booking.remark }}</p>
+                    <div class="card-actions d-flex justify-content-end">
+                        <a href="{% url 'salon:booking_update' booking.pk %}" class="btn btn-warning btn-sm ms-auto">Edit</a>
+                    <a href="{% url 'salon:booking_delete' booking.pk %}" class="btn btn-danger btn-sm ms-auto">Delete</a>
+                    <a href="{% url 'salon:booking_list' %}" class="btn btn-primary btn-sm ms-auto">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

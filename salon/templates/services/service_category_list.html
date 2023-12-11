@@ -1,0 +1,11 @@
+<!-- service_category_list.html -->
+
+<h2>List of Service Categories</h2>
+
+<ul>
+  {% for category in categories %}
+    <li><a href="{% url 'salon:service_category_detail' category.pk %}">{{ category.category_name }} - {{category.branch.branch_name}}</a></li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'salon:service_category_create' %}">Create a new service category</a>

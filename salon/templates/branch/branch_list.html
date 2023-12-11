@@ -1,0 +1,11 @@
+<!-- branch_list.html -->
+
+<h2>List of Branches</h2>
+
+<ul>
+  {% for branch in branches %}
+    <li><a href="{% url 'salon:branch_detail' branch.pk %}">{{ branch.branch_name }}</a></li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'salon:branch_create' %}">Create a new branch</a>

@@ -1,0 +1,16 @@
+<!-- branch_detail.html -->
+
+<h2>Branch Details</h2>
+
+<p><strong>Name:</strong> {{ branch.branch_name }}</p>
+<p><strong>Location:</strong> {{ branch.location }}</p>
+<p><strong>Status:</strong> {% if branch.status %}Active{% else %}Inactive{% endif %}</p>
+<p><strong>Created At:</strong> {{ branch.created_at }}</p>
+<p><strong>Updated At:</strong> {{ branch.updated_at }}</p>
+
+<a href="{% url 'salon:branch_update' branch.pk %}">Update</a>
+<a href="{% url 'salon:branch_delete' branch.pk %}">Delete</a>
+<a href="{% url 'salon:branch_list' %}">Back to List</a>
+
+
+<a href="{% url 'salon:service_create' branch.branch_id %}">Create a new service</a>

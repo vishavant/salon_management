@@ -1,0 +1,12 @@
+<!-- service_package_confirm_delete.html -->
+
+<h2>Confirm Deletion</h2>
+
+<p>Are you sure you want to delete the service package "{{ service_package.package_name }}"?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Yes, delete</button>
+</form>
+
+<a href="{% url 'salon:service_package_list' %}">No, cancel</a>

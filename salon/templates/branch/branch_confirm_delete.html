@@ -1,0 +1,12 @@
+<!-- branch_confirm_delete.html -->
+
+<h2>Confirm Deletion</h2>
+
+<p>Are you sure you want to delete the branch "{{ branch.branch_name }}"?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Yes, delete</button>
+</form>
+
+<a href="{% url 'salon:branch_list' %}">No, cancel</a>

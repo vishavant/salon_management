@@ -1,0 +1,13 @@
+<!-- service_category_detail.html -->
+
+<h2>Service Category Details</h2>
+
+<p><strong>Name:</strong> {{ category.category_name }}</p>
+<p><strong>Branch:</strong> {{ category.branch.branch_name }}</p>
+<p><strong>Description:</strong> {{ category.description }}</p>
+<p><strong>Created At:</strong> {{ category.created_at }}</p>
+<p><strong>Updated At:</strong> {{ category.updated_at }}</p>
+
+<a href="{% url 'salon:service_category_update' category.pk %}">Update</a>
+<a href="{% url 'salon:service_category_delete' category.pk %}">Delete</a>
+<a href="{% url 'salon:service_category_list' %}">Back to List</a>
