@@ -160,16 +160,14 @@ def service_detail(request, service_id):
     service = get_object_or_404(Service, pk=service_id)
     return render(request, 'services/service_detail.html', {'service': service})
 
-def service_create(request, branch_id):
-    branch = get_object_or_404(Branch, pk=branch_id)
-
+def service_create(request):
     if request.method == 'POST':
-        form = ServiceForm(branch, request.POST, request.FILES)
+        form = ServiceForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('salon:service_list')
     else:
-        form = ServiceForm(branch)
+        form = ServiceForm()
 
     return render(request, 'services/service_form.html', {'form': form, 'action': 'Create'})
 
@@ -296,3 +294,8 @@ def booking_delete(request, booking_id):
 
 def display_payments(request):
     return render(request, "payments/payment_list.html")
+
+
+
+def profile(request):
+    return render(request, "accounts/profile.html")

@@ -56,11 +56,14 @@ class ServiceCategoryForm(forms.ModelForm):
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service
-        fields = ['branch', 'category', 'service_name', 'thumbnail', 'description', 'service_amount']
-
-    def __init__(self, branch, *args, **kwargs):
-        super(ServiceForm, self).__init__(*args, **kwargs)
-        self.fields['category'].queryset = ServiceCategory.objects.filter(branch=branch)
+        fields = ['category', 'service_name', 'thumbnail', 'service_amount', 'description']
+        widgets = {
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'service_amount': forms.NumberInput(attrs={'class': 'form-control'}),
+            'thumbnail': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'service_name': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
 
 

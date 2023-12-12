@@ -12,32 +12,34 @@ Service Detail
         <div class="card-title px-2 py-2">
             <div class="row">
                 <div class="col-sm-6">
-                    <h2>Service Details</h2>
-                </div>
-                <div class="col-sm-6 text-end">
-                    <a href="{% url 'salon:service_list' %}" class="btn btn-primary btn-sm ms-auto">Back to List</a>
-                    <a href="{% url 'salon:service_update' service.pk %}" class="btn btn-warning btn-sm ms-auto">Update</a>
-                    <a href="{% url 'salon:service_delete' service.pk %}" class="btn btn-danger btn-sm ms-auto">Delete</a>
+                    <h2>{{ service.service_name }}</h2>
                 </div>
             </div>
         </div>
         <div class="card-body">
-
-            <p><strong>Name:</strong> {{ service.service_name }}</p>
-            <p><strong>Category:</strong> {{ service.category.category_name }}</p>
-            <p><strong>Description:</strong> {{ service.description }}</p>
-            <p><strong>Amount:</strong> {{ service.service_amount }}</p>
-            {% if service.thumbnail %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        {% if service.thumbnail %}
                 <p><strong>Thumbnail:</strong> <img src="{{ service.thumbnail.url }}" alt="{{ service.service_name }}" height="100"></p>
             {% else %}
                 <p>No thumbnail available</p>
             {% endif %}
+                    </div>
+                    <div class="col-sm-6">
+                        <p><strong>Name:</strong> {{ service.service_name }}</p>
+            <p><strong>Category:</strong> {{ service.category.category_name }}</p>
+            <p><strong>Description:</strong> {{ service.description }}</p>
+            <p><strong>Amount:</strong> {{ service.service_amount }}</p>
+            
             <p><strong>Created At:</strong> {{ service.created_at }}</p>
             <p><strong>Updated At:</strong> {{ service.updated_at }}</p>
-            
-            
-            
-            
+        </div>
+        <div class="col-sm-6 text-end">
+            <a href="{% url 'salon:service_list' %}" class="btn btn-primary btn-sm ms-auto">Back to List</a>
+            <a href="{% url 'salon:service_update' service.pk %}" class="btn btn-warning btn-sm ms-auto">Edit</a>
+            <a href="{% url 'salon:service_delete' service.pk %}" class="btn btn-danger btn-sm ms-auto">Delete</a>
+        </div>
+                </div>
         </div>
     </div>
 </div>

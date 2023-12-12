@@ -78,7 +78,7 @@ class ServiceCategory(models.Model):
 
 class Service(models.Model):
     service_id = models.AutoField(primary_key=True)
-    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    # branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
     category = models.ForeignKey(ServiceCategory, on_delete=models.CASCADE)
     service_name = models.CharField(max_length=200)
     thumbnail = models.ImageField(upload_to='service_imaege', null=True, blank=True)
