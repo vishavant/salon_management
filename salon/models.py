@@ -152,6 +152,9 @@ class Payment(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
     def save(self, *args, **kwargs):
+        # Save the Payment object first to get a primary key
+        super().save(*args, **kwargs)
+
         # Calculate the total amount based on the selected services
         total_amount = Decimal('0.00')
         for service in self.services.all():
@@ -159,8 +162,7 @@ class Payment(models.Model):
 
         # Update the amount field with the calculated total
         self.amount = total_amount
-
         super().save(*args, **kwargs)
-    
+
     def __str__(self):
         return f"Payment #{self.payment_id} - {self.client}"

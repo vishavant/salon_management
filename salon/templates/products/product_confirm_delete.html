@@ -1,0 +1,19 @@
+<!-- product_confirm_delete.html -->
+
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Confirm Deletion
+{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2>Confirm Deletion</h2>
+    <p>Are you sure you want to delete the product "{{ product.product_name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, delete</button>
+    </form>
+    <a href="{% url 'salon:product_list' %}" class="btn btn-secondary">No, cancel</a>
+</div>
+{% endblock content %}

@@ -1,0 +1,20 @@
+<!-- payment_detail.html -->
+
+{% extends "layouts/base.html" %}
+
+{% block title %}
+{{ payment }} Details
+{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2>{{ payment }} Details</h2>
+    <p><strong>Client:</strong> {{ payment.client }}</p>
+    <p><strong>Services:</strong> {% for service in payment.services.all %}{{ service.service_name }}, {% endfor %}</p>
+    <p><strong>Assigned Person:</strong> {{ payment.assigned_person }}</p>
+    <p><strong>Payment Mode:</strong> {{ payment.get_payment_mode_display }}</p>
+    <p><strong>Amount:</strong> {{ payment.amount }}</p>
+    <a href="{% url 'salon:payment_update' payment.pk %}" class="btn btn-primary">Update</a>
+    <a href="{% url 'salon:payment_delete' payment.pk %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock content %}

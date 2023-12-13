@@ -1,0 +1,19 @@
+<!-- payment_form.html -->
+
+{% extends "layouts/base.html" %}
+
+{% block title %}
+{{ action }} Payment
+{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2>{{ action }} Payment</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">{{ action }} Payment</button>
+    </form>
+    <a href="{% url 'salon:payment_list' %}" class="btn btn-secondary">Back to List</a>
+</div>
+{% endblock content %}

@@ -1,0 +1,18 @@
+<!-- product_detail.html -->
+
+{% extends "layouts/base.html" %}
+
+{% block title %}
+{{ product.product_name }} Details
+{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2>{{ product.product_name }} Details</h2>
+    <p><strong>Product Name:</strong> {{ product.product_name }}</p>
+    <p><strong>Quantity:</strong> {{ product.quantity }}</p>
+    <p><strong>Branch:</strong> {{ product.branch.branch_name }}</p>
+    <a href="{% url 'salon:product_update' product.pk %}" class="btn btn-primary">Update</a>
+    <a href="{% url 'salon:product_delete' product.pk %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock content %}

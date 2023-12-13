@@ -1,0 +1,19 @@
+<!-- product_form.html -->
+
+{% extends "layouts/base.html" %}
+
+{% block title %}
+{{ action }} Product
+{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="mt-2">{{ action }} Product</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">{{ action }} Product</button>
+    </form>
+    <a href="{% url 'salon:product_list' %}" class="btn btn-secondary sm">Back to List</a>
+</div>
+{% endblock content %}

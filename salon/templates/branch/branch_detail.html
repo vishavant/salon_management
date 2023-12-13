@@ -1,16 +1,28 @@
 <!-- branch_detail.html -->
+{% extends "layouts/base.html" %}
 
-<h2>Branch Details</h2>
+{% block content %}
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-title">
+            <h2 class="text-center mt-5">Branch Details</h2>
+            <div class="card-body">
 
-<p><strong>Name:</strong> {{ branch.branch_name }}</p>
-<p><strong>Location:</strong> {{ branch.location }}</p>
-<p><strong>Status:</strong> {% if branch.status %}Active{% else %}Inactive{% endif %}</p>
-<p><strong>Created At:</strong> {{ branch.created_at }}</p>
-<p><strong>Updated At:</strong> {{ branch.updated_at }}</p>
+                <p><strong>Name:</strong> {{ branch.branch_name }}</p>
+                <p><strong>Location:</strong> {{ branch.location }}</p>
+                <p><strong>Status:</strong> {% if branch.status %}Active{% else %}Inactive{% endif %}</p>
+                <p><strong>Created At:</strong> {{ branch.created_at }}</p>
+                <p><strong>Updated At:</strong> {{ branch.updated_at }}</p>
 
-<a href="{% url 'salon:branch_update' branch.pk %}">Update</a>
-<a href="{% url 'salon:branch_delete' branch.pk %}">Delete</a>
-<a href="{% url 'salon:branch_list' %}">Back to List</a>
+                <a href="{% url 'salon:branch_update' branch.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'salon:branch_delete' branch.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                <a href="{% url 'salon:branch_list' %}" class="btn btn-primary btn-sm">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
 
 
-<a href="{% url 'salon:service_create' branch.branch_id %}">Create a new service</a>
+

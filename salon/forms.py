@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
-from .models import User, ServicePerson, BranchManager, SuperAdmin, Branch, Service, ServiceCategory, Booking, ServicePackage
+from .models import Payment, User, Branch, Service, ServiceCategory, Booking, ServicePackage, Product
 
 class CustomUserCreationForm(UserCreationForm):
 
@@ -45,6 +45,11 @@ class BranchForm(forms.ModelForm):
     class Meta:
         model = Branch
         fields = ['branch_name', 'location', 'status']
+        widgets = {
+            'branch_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'status': forms.CheckboxInput(attrs={'class': 'form-control'}),
+        }
 
 
 class ServiceCategoryForm(forms.ModelForm):
@@ -92,3 +97,31 @@ class BookingForm(forms.ModelForm):
             'service_amount': forms.TextInput(attrs={'class': 'form-control'}),
             'remark': forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+
+
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['branch', 'product_name', 'quantity']
+        widgets = {
+            'branch': forms.Select(attrs={'class': 'form-control'}),
+            'product_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+
+
+
+class PaymentForm(forms.ModelForm):
+    class Meta:
+        model = Payment
+        fields = ['client', 'services', 'assigned_person', 'payment_mode', 'amount']
+        widgets = {
+            'client': forms.Select(attrs={'class': 'form-control'}),
+            'services': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'assigned_person': forms.Select(attrs={'class': 'form-control'}),
+            'payment_mode': forms.Select(attrs={'class': 'form-control'}),
+            'amount': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+
