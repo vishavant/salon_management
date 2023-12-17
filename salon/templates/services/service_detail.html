@@ -20,19 +20,19 @@ Service Detail
                 <div class="row">
                     <div class="col-sm-6">
                         {% if service.thumbnail %}
-                <p><strong>Thumbnail:</strong> <img src="{{ service.thumbnail.url }}" alt="{{ service.service_name }}" height="100"></p>
+                <p><strong>Thumbnail:</strong> <img src="{{ service.thumbnail.url }}" alt="{{ service.service_name }}" height="200"></p>
             {% else %}
                 <p>No thumbnail available</p>
             {% endif %}
                     </div>
                     <div class="col-sm-6">
                         <p><strong>Name:</strong> {{ service.service_name }}</p>
-            <p><strong>Category:</strong> {{ service.category.category_name }}</p>
-            <p><strong>Description:</strong> {{ service.description }}</p>
-            <p><strong>Amount:</strong> {{ service.service_amount }}</p>
+                        <p><strong>Category:</strong> {{ service.category.category_name }}</p>
+                        <p><strong>Description:</strong> {{ service.description }}</p>
+                        <p><strong>Amount:</strong> {{ service.service_amount }}</p>
             
-            <p><strong>Created At:</strong> {{ service.created_at }}</p>
-            <p><strong>Updated At:</strong> {{ service.updated_at }}</p>
+                        <p><strong>Created At:</strong> {{ service.created_at }}</p>
+                        <p><strong>Updated At:</strong> {{ service.updated_at }}</p>
         </div>
         <div class="col-sm-6 text-end">
             <a href="{% url 'salon:service_list' %}" class="btn btn-primary btn-sm ms-auto">Back to List</a>

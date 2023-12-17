@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
-from .models import User, Branch, Service, ServiceCategory, Booking, ServicePackage, Product
+from .models import Employee, Branch, Service, ServiceCategory, Booking, ServicePackage, Product
+from django.forms import BaseInlineFormSet
 
 # class CustomUserCreationForm(UserCreationForm):
 
@@ -44,8 +45,9 @@ from .models import User, Branch, Service, ServiceCategory, Booking, ServicePack
 class BranchForm(forms.ModelForm):
     class Meta:
         model = Branch
-        fields = ['branch_name', 'location', 'status']
+        fields = ['user','branch_name', 'location', 'status']
         widgets = {
+            'user': forms.Select(attrs={'class': 'form-control'}),
             'branch_name': forms.TextInput(attrs={'class': 'form-control'}),
             'location': forms.TextInput(attrs={'class': 'form-control'}),
             'status': forms.CheckboxInput(attrs={}),
@@ -83,21 +85,27 @@ class ServicePackageForm(forms.ModelForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['branch', 'name', 'phone', 'gender', 'service', 'dob', 'location', 'booking_source', 'assigned_person', 'service_amount', 'payment_mode','remark']
+        fields = ['branch', 'name', 'phone', 'gender', 'services', 'dob', 'location', 'booking_source', 'assigned_person', 'service_amount', 'payment_mode', 'payment_status','remark']
         widgets = {
             'branch': forms.Select(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
             'gender': forms.Select(attrs={'class': 'form-control'}),
-            'service': forms.CheckboxSelectMultiple(attrs={}),
+            'services': forms.CheckboxSelectMultiple(attrs={}),
             'dob': forms.DateInput(attrs={'class': 'form-control', 'type':'date'}),
             'location': forms.TextInput(attrs={'class': 'form-control'}),
             'booking_source': forms.Select(attrs={'class': 'form-control'}),
             'assigned_person': forms.Select(attrs={'class': 'form-control'}),
             'service_amount': forms.TextInput(attrs={'class': 'form-control'}),
             'payment_mode': forms.Select(attrs={'class': 'form-control'}),
+            'payment_status': forms.Select(attrs={'class': 'form-control'}),
             'remark': forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+
+
+
+
 
 
 
@@ -116,3 +124,7 @@ class ProductForm(forms.ModelForm):
 
 
 
+class EmployeeForm(forms.ModelForm):
+    class Meta:
+        model = Employee
+        fields = ['branch', 'name', 'phone', 'gender', 'address']

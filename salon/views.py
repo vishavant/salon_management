@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
-from .forms import BranchForm, BookingForm, ProductForm
+from .forms import BranchForm, BookingForm, ProductForm, EmployeeForm
 # Create your views here.
 
 
@@ -390,3 +390,81 @@ def user_logout(request):
     logout(request)
     messages.success(request, 'Logout successful.')
     return redirect('salon:login')
+
+
+
+
+
+def employee_list(request):
+    employees = Employee.objects.all()
+    return render(request, 'salon/employee_list.html', {'employees': employees})
+
+def employee_detail(request, employee_id):
+    employee = get_object_or_404(Employee, pk=employee_id)
+    return render(request, 'salon/employee_detail.html', {'employee': employee})
+
+def employee_create(request):
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Employee created successfully.')
+            return redirect('salon:employee_list')
+        else:
+            messages.error(request, 'Error creating employee. Please correct the errors below.')
+    else:
+        form = EmployeeForm()
+    return render(request, 'salon/employee_form.html', {'form': form, 'action': 'Create'})
+
+def employee_update(request, employee_id):
+    employee = get_object_or_404(Employee, pk=employee_id)
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST, instance=employee)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Employee updated successfully.')
+            return redirect('salon:employee_list')
+        else:
+            messages.error(request, 'Error updating employee. Please correct the errors below.')
+    else:
+        form = EmployeeForm(instance=employee)
+    return render(request, 'salon/employee_form.html', {'form': form, 'action': 'Update'})
+
+def employee_delete(request, employee_id):
+    employee = get_object_or_404(Employee, pk=employee_id)
+    employee.delete()
+    messages.success(request, 'Employee deleted successfully.')
+    return redirect('salon:employee_list')
+
+
+
+# views.py
+
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.views import View
+import xhtml2pdf.pisa as pisa
+from .models import Booking
+
+class InvoicePDFView(View):
+    def get(self, request, booking_id, *args, **kwargs):
+        booking = Booking.objects.get(pk=booking_id)
+        template_path = 'bookings/invoice.html'  # Replace with the actual path to your template
+
+        # Load the template
+        template = get_template(template_path)
+        context = {'booking': booking}
+
+        # Render the template
+        html = template.render(context)
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="invoice_{booking.booking_id}.pdf"'
+
+        # Create PDF
+        pisa_status = pisa.CreatePDF(html, dest=response)
+
+        # Check if PDF creation was successful
+        if pisa_status.err:
+            return HttpResponse('We had some errors <pre>' + html + '</pre>')
+
+        return response

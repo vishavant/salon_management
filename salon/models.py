@@ -94,20 +94,25 @@ PAYMENT_MODE = (
     ('ONLINE', 'Online'),
 )
 
+PAYMENT_STATUS = (
+    ('PENDING', 'Pending'),
+    ('RECEIVED', 'Received'),
+)
+
 class Booking(models.Model):
     booking_id = models.AutoField(primary_key=True)
     branch = models.ForeignKey(Branch, on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=100)
     phone = models.IntegerField(blank=True, null=True)
     gender = models.CharField(max_length=15, choices=GENDER)
-    service = models.ManyToManyField(Service)
+    services = models.ManyToManyField(Service)
     # booking_date = models.DateTimeField(help_text="Date on which customer want service")
     dob = models.DateField(blank=True, null=True)
     location = models.CharField(max_length=200, blank=True, null=True)
     booking_source = models.CharField(max_length=200, choices=BOOKING_SOURCE, blank=True, null=True)
     assigned_person = models.ForeignKey(Employee, on_delete=models.CASCADE)
     service_amount = models.IntegerField(blank=True, null=True)
-    payment_status = models.BooleanField(default=False)
+    payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS)
     payment_mode = models.CharField(max_length=50, choices=PAYMENT_MODE, blank=True, null=True)
     remark = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -122,7 +127,7 @@ class Booking(models.Model):
 
         # Calculate the total amount based on the selected services
         total_amount = Decimal('0.00')
-        for ser in self.service.all():
+        for ser in self.services.all():
             total_amount += ser.service_amount
 
         # Update the amount field with the calculated total

@@ -54,7 +54,8 @@
                     {{ booking.phone }}
                   </td>
                   <td>
-                      <span class="service">{{ booking.service }}</span>
+                    
+                    {% for services in booking.services.all %}{{ services.service_name }}{% if not forloop.last %}, {% endif %}{% endfor %}
                   </td>
                   <td>
                       <span class="price">{{ booking.assigned_person.name }}</span>

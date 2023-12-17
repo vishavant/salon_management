@@ -26,7 +26,7 @@ Booking
                     <h4>Service and Other information</h4>
                     <hr>
                     
-                    <p><strong>Services:</strong> <span class="badge badge-sm bg-gradient-success">{% for service in booking.service.all %}{{ service.service_name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span></p>  
+                    <p><strong>Services:</strong> <span class="badge badge-sm bg-gradient-success">{% for services in booking.services.all %}{{ services.service_name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span></p>  
                     <p><strong>Location:</strong> {{ booking.location }}</p>
                     <p><strong>Booking Source:</strong> {{ booking.booking_source }}</p>
                     <p><strong>Assigned Person:</strong> {{ booking.assigned_person.name }}</p>
@@ -40,6 +40,9 @@ Booking
                 </div>
             </div>
         </div>
+        {% if booking.payment_status %}
+        <p><a href="{% url 'salon:invoice_pdf' booking.pk %}">Download Invoice</a></p>
+        {% endif %}
     </div>
 </div>
 

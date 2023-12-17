@@ -58,7 +58,7 @@ function calculateSum() {
     var sum = 0;
 
     // Iterate over each checked checkbox and add its value to the sum
-    $('input[name="service"]:checked').each(function () {
+    $('input[name="services"]:checked').each(function () {
       sum += parseFloat($(this).val());
     });
 
@@ -67,7 +67,7 @@ function calculateSum() {
   }
 
   // Attach an event listener to the service checkboxes
-  $('input[name="service"]').change(function () {
+  $('input[name="services"]').change(function () {
     calculateSum();
   });
 

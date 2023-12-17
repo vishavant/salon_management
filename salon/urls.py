@@ -8,11 +8,11 @@ urlpatterns = [
     path('', views.admin_dashboard, name='home'),
     # path('users', views.users, name='users'),
 
-    # path('branches/', views.branch_list, name='branch_list'),
-    # path('branches/<int:branch_id>/', views.branch_detail, name='branch_detail'),
-    # path('branches/create/', views.branch_create, name='branch_create'),
-    # path('branches/<int:branch_id>/update/', views.branch_update, name='branch_update'),
-    # path('branches/<int:branch_id>/delete/', views.branch_delete, name='branch_delete'),
+    path('branches/', views.branch_list, name='branch_list'),
+    path('branches/<int:branch_id>/', views.branch_detail, name='branch_detail'),
+    path('branches/create/', views.branch_create, name='branch_create'),
+    path('branches/<int:branch_id>/update/', views.branch_update, name='branch_update'),
+    path('branches/<int:branch_id>/delete/', views.branch_delete, name='branch_delete'),
 
     path('service_categories/', views.service_category_list, name='service_category_list'),
     path('service_categories/<int:cat_id>/', views.service_category_detail, name='service_category_detail'),
@@ -58,6 +58,15 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
+
+
+    path('employees/', views.employee_list, name='employee_list'),
+    path('employees/<int:employee_id>/', views.employee_detail, name='employee_detail'),
+    path('employees/create/', views.employee_create, name='employee_create'),
+    path('employees/<int:employee_id>/update/', views.employee_update, name='employee_update'),
+    path('employees/<int:employee_id>/delete/', views.employee_delete, name='employee_delete'),
+
+    path('invoice/<int:booking_id>/', views.InvoicePDFView.as_view(), name='invoice_pdf'),
 
 
 

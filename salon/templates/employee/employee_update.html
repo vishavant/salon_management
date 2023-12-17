@@ -1,0 +1,13 @@
+<!-- salon/templates/salon/employee_update.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Update Employee</h2>
+  <form method="post" action="{% url 'salon:employee_update' employee.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update</button>
+  </form>
+  <a href="{% url 'salon:employee_list' %}">Back to employee list</a>
+{% endblock %}

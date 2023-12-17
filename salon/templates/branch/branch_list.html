@@ -35,7 +35,7 @@
                     
                   <th scope="col" class="sort" data-sort="image">Date</th>
                   <th scope="col" class="sort" data-sort="image">Branch Name</th>
-                  {% comment %} <th scope="col" class="sort" data-sort="name">Service Name</th> {% endcomment %}
+                  <th scope="col" class="sort" data-sort="name">Assigned Name</th>
                   <th scope="col" class="sort" data-sort="category">Location</th>
                   <th scope="col">Status</th>
                   <th scope="col"></th>
@@ -49,6 +49,9 @@
                     <a href="{% url 'salon:branch_detail' branch.pk %}">{{ branch.branch_name }}</a>
                   </th>
                   
+                  <td class="location">
+                    {{ branch.user }}
+                  </td>
                   <td class="location">
                     {{ branch.location }}
                   </td>

@@ -1,0 +1,22 @@
+<!-- your_template.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice</title>
+</head>
+<body>
+
+    <img src="/static/assets/img/brand/creative_cuts_logo.png" alt="logo">
+    <h1>Invoice</h1>
+    <p>Booking ID: {{ booking.booking_id }}</p>
+    <p>Customer: {{ booking.name }}</p>
+    <p>Services: {% for services in booking.services.all %}{{ services.service_name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    <p>Service Amount: {{ booking.service_amount }}</p>
+    <p>Payment Status: {% if booking.payment_status %}Paid{% else %}Pending{% endif %}</p>
+
+    <!-- Add more details as needed -->
+
+    <p>Thank you for choosing our services!</p>
+</body>
+</html>
