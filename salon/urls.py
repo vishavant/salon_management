@@ -6,13 +6,13 @@ app_name = 'salon'
 urlpatterns = [
     path('index', views.index),
     path('', views.admin_dashboard, name='home'),
-    path('users', views.users, name='users'),
+    # path('users', views.users, name='users'),
 
-    path('branches/', views.branch_list, name='branch_list'),
-    path('branches/<int:branch_id>/', views.branch_detail, name='branch_detail'),
-    path('branches/create/', views.branch_create, name='branch_create'),
-    path('branches/<int:branch_id>/update/', views.branch_update, name='branch_update'),
-    path('branches/<int:branch_id>/delete/', views.branch_delete, name='branch_delete'),
+    # path('branches/', views.branch_list, name='branch_list'),
+    # path('branches/<int:branch_id>/', views.branch_detail, name='branch_detail'),
+    # path('branches/create/', views.branch_create, name='branch_create'),
+    # path('branches/<int:branch_id>/update/', views.branch_update, name='branch_update'),
+    # path('branches/<int:branch_id>/delete/', views.branch_delete, name='branch_delete'),
 
     path('service_categories/', views.service_category_list, name='service_category_list'),
     path('service_categories/<int:cat_id>/', views.service_category_detail, name='service_category_detail'),
@@ -33,11 +33,11 @@ urlpatterns = [
     path('service_packages/<int:package_id>/update/', views.service_package_update, name='service_package_update'),
     path('service_packages/<int:package_id>/delete/', views.service_package_delete, name='service_package_delete'),
 
-    path('users/', views.user_list, name='user_list'),
-    path('users/<int:user_id>/', views.user_detail, name='user_detail'),
-    path('users/create/', views.user_create, name='user_create'),
-    path('users/<int:user_id>/update/', views.user_update, name='user_update'),
-    path('users/<int:user_id>/delete/', views.user_delete, name='user_delete'),
+    # path('users/', views.user_list, name='user_list'),
+    # path('users/<int:user_id>/', views.user_detail, name='user_detail'),
+    # path('users/create/', views.user_create, name='user_create'),
+    # path('users/<int:user_id>/update/', views.user_update, name='user_update'),
+    # path('users/<int:user_id>/delete/', views.user_delete, name='user_delete'),
 
     path('bookings/', views.booking_list, name='booking_list'),
     path('bookings/<int:booking_id>/', views.booking_detail, name='booking_detail'),
@@ -54,6 +54,13 @@ urlpatterns = [
     path('products/<int:product_id>/update/', views.product_update, name='product_update'),
     path('products/<int:product_id>/delete/', views.product_delete, name='product_delete'),
 
-   
+   #=============================ACCOUNTS RELATED======================================#
+    path('register/', views.register, name='register'),
+    path('login/', views.user_login, name='login'),
+    path('logout/', views.user_logout, name='logout'),
+
+
+
+
 
 ]

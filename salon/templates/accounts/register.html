@@ -32,64 +32,37 @@
 
               {% if not success %}
 
-                <form method="POST">
-
-                  {% csrf_token %}
-            
-                  <div class="form-group">
-                    <div class="input-group input-group-alternative mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                      </div>
-                      {{ form.username }}
+              <form action="/register/" method="POST"> {% csrf_token %}
+                <div class="container">
+                    <div class="mb-2">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username">
                     </div>
-                  </div>
-                  <span class="text-error">{{ form.username.errors }}</span>
-
-                  <div class="form-group">
-                    <div class="input-group input-group-alternative mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                      </div>
-                      {{ form.email }}
+                    <div class="mb-2">
+                        <label for="first_nam" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name">
                     </div>
-                  </div>
-                  <span class="text-error">{{ form.email.errors }}</span>
-
-                  <div class="form-group">
-                    <div class="input-group input-group-alternative">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                      </div>
-                      {{ form.password1 }}
+                    <div class="mb-2">
+                        <label for="last_name" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name">
                     </div>
-                  </div>
-                  <span class="text-error">{{ form.password1.errors }}</span>
-
-                  <div class="form-group">
-                    <div class="input-group input-group-alternative">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                      </div>
-                      {{ form.password2 }}
+                    <div class="mb-2">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email">
                     </div>
-                  </div>
-                  <span class="text-error">{{ form.password2.errors }}</span>
-
-                  <div class="row my-4">
-                    <div class="col-12">
-                      <div class="custom-control custom-control-alternative custom-checkbox">
-                        <input class="custom-control-input" id="customCheckRegister" type="checkbox">
-                        <label class="custom-control-label" for="customCheckRegister">
-                          <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
-                        </label>
-                      </div>
+                    <div class="mb-2">
+                        <label for="password1" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password1" name="password1">
                     </div>
-                  </div>
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary mt-4">Create account</button>
-                  </div>
-                </form>
+                    <div class="mb-2">
+                        <label for="password2" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="password2" name="password2">
+                    </div>
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
 
               {% endif %}  
   
@@ -102,7 +75,7 @@
       <div class="row mt-3">
         <div class="col-3"></div>
         <div class="col-3">
-          <a href="{% url 'login' %}" class="text-light"><small>Login</small></a>
+          <a href="{% url 'salon:login' %}" class="text-light"><small>Login</small></a>
         </div>
         <div class="col-3 text-right">
           <a href="https://appseed.us/support" class="text-light"><small>Get Support</small></a>

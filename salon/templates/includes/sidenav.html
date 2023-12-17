@@ -18,7 +18,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if 'users/' in segment %} active {% endif %}" href="{% url "salon:user_list" %}">
+            <a class="nav-link {% if 'users/' in segment %} active {% endif %}" href="#">
               <i class="ni ni-planet text-orange"></i>
               <span class="nav-link-text">Users</span>
             </a>
@@ -61,7 +61,7 @@
           </li> 
 
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{% url "salon:logout" %}">
               <i class="ni ni-user-run text-red"></i>
               <span class="nav-link-text">Logout</span>
             </a>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
-from .forms import BranchForm, BookingForm, CustomUserCreationForm, ProductForm
+from .forms import BranchForm, BookingForm, ProductForm
 # Create your views here.
 
 
@@ -12,49 +12,49 @@ def admin_dashboard(request):
     return render(request, "admin/dashboard.html")
 
 
-def users(request):
-    return render(request, "admin/users.html")
+# def users(request):
+#     return render(request, "admin/users.html")
 
-def user_list(request):
-    users = User.objects.all()
-    return render(request, 'accounts/user_list.html', {'users': users})
+# def user_list(request):
+#     users = User.objects.all()
+#     return render(request, 'accounts/user_list.html', {'users': users})
 
-def user_detail(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
-    return render(request, 'accounts/user_detail.html', {'user': user})
+# def user_detail(request, user_id):
+#     user = get_object_or_404(User, pk=user_id)
+#     return render(request, 'accounts/user_detail.html', {'user': user})
 
-def user_create(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('salon:user_list')
-    else:
-        form = CustomUserCreationForm()
+# def user_create(request):
+#     if request.method == 'POST':
+#         form = CustomUserCreationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('salon:user_list')
+#     else:
+#         form = CustomUserCreationForm()
 
-    return render(request, 'accounts/user_form.html', {'form': form, 'action': 'Create'})
+#     return render(request, 'accounts/user_form.html', {'form': form, 'action': 'Create'})
 
-def user_update(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
+# def user_update(request, user_id):
+#     user = get_object_or_404(User, pk=user_id)
 
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            return redirect('salon:user_list')
-    else:
-        form = CustomUserCreationForm(instance=user)
+#     if request.method == 'POST':
+#         form = CustomUserCreationForm(request.POST, instance=user)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('salon:user_list')
+#     else:
+#         form = CustomUserCreationForm(instance=user)
 
-    return render(request, 'accounts/user_form.html', {'form': form, 'action': 'Update'})
+#     return render(request, 'accounts/user_form.html', {'form': form, 'action': 'Update'})
 
-def user_delete(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
+# def user_delete(request, user_id):
+#     user = get_object_or_404(User, pk=user_id)
 
-    if request.method == 'POST':
-        user.delete()
-        return redirect('salon:user_list')
+#     if request.method == 'POST':
+#         user.delete()
+#         return redirect('salon:user_list')
 
-    return render(request, 'accounts/user_confirm_delete.html', {'user': user})
+#     return render(request, 'accounts/user_confirm_delete.html', {'user': user})
 
 
 
@@ -347,3 +347,46 @@ def product_delete(request, product_id):
     return render(request, 'products/product_confirm_delete.html', {'product': product})
 
 
+
+
+#-------------------------------------------------------------------
+
+# Creating Account Views
+
+# salon/views.py
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Registration successful. You can now log in.')
+            return redirect('salon:login')
+        else:
+            messages.error(request, 'Registration failed. Please correct the errors below.')
+    else:
+        form = UserCreationForm()
+    return render(request, 'accounts/register.html', {'form': form})
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, 'Login successful.')
+            return redirect('salon:home')  # Replace 'home' with your desired home page URL
+        else:
+            messages.error(request, 'Login failed. Please check your username and password.')
+    return render(request, 'accounts/login.html')
+
+def user_logout(request):
+    logout(request)
+    messages.success(request, 'Logout successful.')
+    return redirect('salon:login')
