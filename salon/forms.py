@@ -1,19 +1,19 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
-from .models import Payment, User, Branch, Service, ServiceCategory, Booking, ServicePackage, Product
+from .models import User, Branch, Service, ServiceCategory, Booking, ServicePackage, Product
 
 class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("name", "phone", "email", "city")
+        fields = ("name", "phone", "email", "city", 'is_branch_manager', 'is_service_person')
 
 
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ("name", "phone", "email", "city")
+        fields = ("name", "phone", "email", "city", 'is_branch_manager', 'is_service_person')
 
 
 # from django.db import transaction
@@ -48,7 +48,7 @@ class BranchForm(forms.ModelForm):
         widgets = {
             'branch_name': forms.TextInput(attrs={'class': 'form-control'}),
             'location': forms.TextInput(attrs={'class': 'form-control'}),
-            'status': forms.CheckboxInput(attrs={'class': 'form-control'}),
+            'status': forms.CheckboxInput(attrs={}),
         }
 
 
@@ -83,18 +83,19 @@ class ServicePackageForm(forms.ModelForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['branch', 'name', 'phone', 'gender', 'service', 'dob', 'location', 'booking_source', 'assigned_person', 'service_amount', 'remark']
+        fields = ['branch', 'name', 'phone', 'gender', 'service', 'dob', 'location', 'booking_source', 'assigned_person', 'service_amount', 'payment_mode','remark']
         widgets = {
             'branch': forms.Select(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
             'gender': forms.Select(attrs={'class': 'form-control'}),
-            'service': forms.SelectMultiple(attrs={'class': 'form-control'}),
-            'dob': forms.DateInput(attrs={'class': 'form-control'}),
+            'service': forms.CheckboxSelectMultiple(attrs={}),
+            'dob': forms.DateInput(attrs={'class': 'form-control', 'type':'date'}),
             'location': forms.TextInput(attrs={'class': 'form-control'}),
-            'booking_source': forms.TextInput(attrs={'class': 'form-control'}),
+            'booking_source': forms.Select(attrs={'class': 'form-control'}),
             'assigned_person': forms.Select(attrs={'class': 'form-control'}),
             'service_amount': forms.TextInput(attrs={'class': 'form-control'}),
+            'payment_mode': forms.Select(attrs={'class': 'form-control'}),
             'remark': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
@@ -113,15 +114,5 @@ class ProductForm(forms.ModelForm):
 
 
 
-class PaymentForm(forms.ModelForm):
-    class Meta:
-        model = Payment
-        fields = ['client', 'services', 'assigned_person', 'payment_mode', 'amount']
-        widgets = {
-            'client': forms.Select(attrs={'class': 'form-control'}),
-            'services': forms.SelectMultiple(attrs={'class': 'form-control'}),
-            'assigned_person': forms.Select(attrs={'class': 'form-control'}),
-            'payment_mode': forms.Select(attrs={'class': 'form-control'}),
-            'amount': forms.NumberInput(attrs={'class': 'form-control'}),
-        }
+
 

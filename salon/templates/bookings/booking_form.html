@@ -10,22 +10,25 @@ Create Booking
     <div class="card">
         <div class="card-title">
             <h2 class="text-center mt-2">Add Booking</h2>
-            
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
+                  <h3> <span>Person Information</span></h3>
+                   <hr>
                     <form action="" method="post" enctype="multipart/form-data" class="">
                         {% csrf_token %}
                         {% for fm in form.visible_fields|slice:":5" %}
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-2">
                                 {{ fm.label_tag }} {{ fm }} <small class="text-danger">{{ fm.errors|striptags }}</small>
                             </div>
                         {% endfor %}
                 </div>
                 <div class="col-md-6">
+                    <h3><span>Additional Information</span></h3>
+                    <hr>
                     {% for fm in form.visible_fields|slice:"5:" %}
-                        <div class="form-group mb-3">
+                        <div class="form-group mb-2">
                             {{ fm.label_tag }} {{ fm }} <small class="text-danger">{{ fm.errors|striptags }}</small>
                         </div>
                     {% endfor %}
@@ -43,3 +46,35 @@ Create Booking
     </div>
 </div>
 {% endblock content %}
+
+{% block javascripts %}
+<!-- Include jQuery in your template -->
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+// Function to calculate the sum
+function calculateSum() {
+    var sum = 0;
+
+    // Iterate over each checked checkbox and add its value to the sum
+    $('input[name="service"]:checked').each(function () {
+      sum += parseFloat($(this).val());
+    });
+
+    // Update the service_amount field with the calculated sum
+    $('#id_service_amount').val(sum.toFixed(2));
+  }
+
+  // Attach an event listener to the service checkboxes
+  $('input[name="service"]').change(function () {
+    calculateSum();
+  });
+
+  // Call the function initially to set the initial value
+  calculateSum();
+</script>
+
+
+
+{% endblock javascripts %}

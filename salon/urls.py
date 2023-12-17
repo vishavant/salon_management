@@ -54,10 +54,6 @@ urlpatterns = [
     path('products/<int:product_id>/update/', views.product_update, name='product_update'),
     path('products/<int:product_id>/delete/', views.product_delete, name='product_delete'),
 
-    path('payments/', views.payment_list, name='payment_list'),
-    path('payments/<int:payment_id>/', views.payment_detail, name='payment_detail'),
-    path('payments/create/', views.payment_create, name='payment_create'),
-    path('payments/<int:payment_id>/update/', views.payment_update, name='payment_update'),
-    path('payments/<int:payment_id>/delete/', views.payment_delete, name='payment_delete'),
+   
 
 ]

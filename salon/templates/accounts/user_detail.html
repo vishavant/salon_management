@@ -1,6 +1,16 @@
 <!-- user_detail.html -->
 
-<h2>User Details</h2>
+{% extends "layouts/base.html" %}
+
+{% block title %}
+{{ user }}
+{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <h2>User Details</h2>
 
 <p><strong>Name:</strong> {{ user.name }}</p>
 <p><strong>Email:</strong> {{ user.email }}</p>
@@ -18,3 +28,8 @@
 <a href="{% url 'salon:user_update' user.pk %}">Update</a>
 <a href="{% url 'salon:user_delete' user.pk %}">Delete</a>
 <a href="{% url 'salon:user_list' %}">Back to List</a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

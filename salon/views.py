@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
-from .forms import BranchForm, BookingForm, CustomUserCreationForm, PaymentForm, ProductForm
+from .forms import BranchForm, BookingForm, CustomUserCreationForm, ProductForm
 # Create your views here.
 
 
@@ -251,7 +251,7 @@ def generate_invoice(request):
 
 
 def booking_list(request):
-    bookings = Booking.objects.all()
+    bookings = Booking.objects.all().order_by('-created_at')
     return render(request, 'bookings/booking_list.html', {'bookings': bookings})
 
 def booking_detail(request, booking_id):
@@ -263,6 +263,7 @@ def booking_create(request):
         form = BookingForm(request.POST)
         if form.is_valid():
             form.save()
+
             return redirect('salon:booking_list')
     else:
         form = BookingForm()
@@ -293,7 +294,8 @@ def booking_delete(request, booking_id):
 
 
 def display_payments(request):
-    return render(request, "payments/payment_list.html")
+    payments = Booking.objects.all().order_by('-created_at')
+    return render(request, "payments/payment_list.html", {'payments':payments})
 
 
 
@@ -345,43 +347,3 @@ def product_delete(request, product_id):
     return render(request, 'products/product_confirm_delete.html', {'product': product})
 
 
-def payment_list(request):
-    payments = Payment.objects.all()
-    return render(request, 'payments/payment_list.html', {'payments': payments})
-
-def payment_detail(request, payment_id):
-    payment = get_object_or_404(Payment, payment_id=payment_id)
-    return render(request, 'payments/payment_detail.html', {'payment': payment})
-
-def payment_create(request):
-    if request.method == 'POST':
-        form = PaymentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('salon:payment_list')
-    else:
-        form = PaymentForm()
-
-    return render(request, 'payments/payment_form.html', {'form': form, 'action': 'Add'})
-
-def payment_update(request, payment_id):
-    payment = get_object_or_404(Payment, payment_id=payment_id)
-
-    if request.method == 'POST':
-        form = PaymentForm(request.POST, instance=payment)
-        if form.is_valid():
-            form.save()
-            return redirect('salon:payment_list')
-    else:
-        form = PaymentForm(instance=payment)
-
-    return render(request, 'payments/payment_form.html', {'form': form, 'action': 'Update'})
-
-def payment_delete(request, payment_id):
-    payment = get_object_or_404(Payment, payment_id=payment_id)
-
-    if request.method == 'POST':
-        payment.delete()
-        return redirect('salon:payment_list')
-
-    return render(request, 'payments/payment_confirm_delete.html', {'payment': payment})

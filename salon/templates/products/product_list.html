@@ -15,7 +15,7 @@ Product List
             <h6 class="h2 text-white d-inline-block mb-0">Product</h6>
           </div>
           <div class="col-lg-6 col-5 text-right">
-            <a href="{% url 'salon:booking_create' %}" class="btn btn-sm btn-neutral">New</a>
+            <a href="{% url 'salon:product_create' %}" class="btn btn-sm btn-neutral">New</a>
             {% comment %} <a href="#" class="btn btn-sm btn-neutral">Filters</a> {% endcomment %}
           </div>
         </div>
@@ -61,7 +61,10 @@ Product List
                       <span class="quantity">{{ product.quantity }}</span>
                   </td>
                   <td>
-                      <span class="price">{{ booking.assigned_person.name }}</span>
+                      <span class="quantity">5</span>
+                  </td>
+                  <td>
+                      <span class="price">{{ product.updated_at|date:"d-m-Y" }}</span>
                   </td>
                     
                  <td class="text-right">

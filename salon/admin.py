@@ -37,7 +37,7 @@ admin.site.register(User, CustomUserAdmin)
 # admin.py
 
 from django.contrib import admin
-from .models import Branch, ServiceCategory, Service, Booking, Product, Payment
+from .models import Branch, ServiceCategory, Service, Booking, Product
 
 @admin.register(Branch)
 class BranchAdmin(admin.ModelAdmin):
@@ -62,7 +62,5 @@ class BookingAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('product_id', 'branch', 'product_name', 'quantity', 'created_at', 'updated_at')
 
-@admin.register(Payment)
-class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('payment_id', 'client', 'amount')
+
 
