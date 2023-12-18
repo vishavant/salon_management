@@ -67,6 +67,7 @@ urlpatterns = [
     path('employees/<int:employee_id>/delete/', views.employee_delete, name='employee_delete'),
 
     path('invoice/<int:booking_id>/', views.InvoicePDFView.as_view(), name='invoice_pdf'),
+    path('invoice/<int:booking_id>/preview/', views.InvoicePreviewView.as_view(), name='invoice_preview'),
 
 
 

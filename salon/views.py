@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from .models import *
 from .forms import BranchForm, BookingForm, ProductForm, EmployeeForm
+from django.db.models import Sum
 # Create your views here.
 
 
@@ -8,8 +10,6 @@ def index(request):
     return render(request, "home/index.html")
 
 
-def admin_dashboard(request):
-    return render(request, "admin/dashboard.html")
 
 
 # def users(request):
@@ -457,10 +457,10 @@ class InvoicePDFView(View):
 
         # Render the template
         html = template.render(context)
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename="invoice_{booking.booking_id}.pdf"'
-
+        
         # Create PDF
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'inline; filename="invoice_{booking.booking_id}.pdf"'
         pisa_status = pisa.CreatePDF(html, dest=response)
 
         # Check if PDF creation was successful
@@ -468,3 +468,37 @@ class InvoicePDFView(View):
             return HttpResponse('We had some errors <pre>' + html + '</pre>')
 
         return response
+
+
+class InvoicePreviewView(View):
+    def get(self, request, booking_id, *args, **kwargs):
+        booking = Booking.objects.get(pk=booking_id)
+        pdf_url = reverse_lazy('salon:invoice_pdf', kwargs={'booking_id': booking.pk})
+        context = {'pdf_url': pdf_url}
+        return render(request, 'branch/invoice_pdf_preview.html', context)
+    
+
+
+from datetime import date
+
+def admin_dashboard(request):
+    # Total bookings
+    total_bookings = Booking.objects.count()
+
+    # Total branches
+    total_branches = Branch.objects.count()
+
+    # Total sum of payments recorded
+    total_payments = Booking.objects.filter(payment_status=True).aggregate(Sum('service_amount'))['service_amount__sum'] or 0
+
+    # Total employees
+    total_employees = Employee.objects.count()
+
+    context = {
+        'total_bookings': total_bookings,
+        'total_branches': total_branches,
+        'total_payments': total_payments,
+        'total_employees': total_employees,
+    }
+    # today_bookings = Booking.objects.filter(booking_date=date.today())
+    return render(request, 'admin/dashboard.html', context)

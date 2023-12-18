@@ -70,6 +70,7 @@
                         <i class="fas fa-ellipsis-v"></i>
                       </a>
                       <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                        <a class="dropdown-item" href="{% url 'salon:invoice_pdf' booking.pk %}">Download Invoice</a>
                         <a class="dropdown-item" href="{% url 'salon:booking_update' booking.pk %}">Edit</a>
                         <a class="dropdown-item" href="{% url 'salon:booking_delete' booking.pk %}">Delete</a>
                       </div>

@@ -23,7 +23,18 @@ Booking
                 </div>
                 <strong></strong>
                 <div class="col-sm-7">
-                    <h4>Service and Other information</h4>
+                    <div class="row">
+                        <div class="col-sm-6">
+
+                            <h4>Service and Other information</h4>
+                        </div>
+                        <div class="col-sm-6 text-end">
+                            {% if booking.payment_status %}
+        <a href="{% url 'salon:invoice_pdf' booking.pk %}" target="_blank" class="btn btn-secondary btn-sm">Download Invoice</a>
+        {% endif %}
+                        </div>
+                    </div>
+                    
                     <hr>
                     
                     <p><strong>Services:</strong> <span class="badge badge-sm bg-gradient-success">{% for services in booking.services.all %}{{ services.service_name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span></p>  
@@ -40,9 +51,6 @@ Booking
                 </div>
             </div>
         </div>
-        {% if booking.payment_status %}
-        <p><a href="{% url 'salon:invoice_pdf' booking.pk %}">Download Invoice</a></p>
-        {% endif %}
     </div>
 </div>
 

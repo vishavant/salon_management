@@ -58,7 +58,7 @@ class BookingAdmin(admin.ModelAdmin):
     list_display = ('branch', 'name', 'phone', 'gender', 'display_services', 'service_amount', 'created_at')
 
     def display_services(self, obj):
-        return ", ".join([service.service_name for service in obj.service.all()])
+        return ", ".join([services.service_name for services in obj.services.all()])
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
