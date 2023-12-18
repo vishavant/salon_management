@@ -28,9 +28,9 @@ Booking
 
                             <h4>Service and Other information</h4>
                         </div>
-                        <div class="col-sm-6 text-end">
+                        <div class="col-sm-6 d-flex justify-content-end">
                             {% if booking.payment_status %}
-        <a href="{% url 'salon:invoice_pdf' booking.pk %}" target="_blank" class="btn btn-secondary btn-sm">Download Invoice</a>
+        <a href="{% url 'salon:invoice_pdf' booking.pk %}" target="_blank" class="btn btn-dark btn-sm">Download Reciept</a>
         {% endif %}
                         </div>
                     </div>

@@ -493,12 +493,14 @@ def admin_dashboard(request):
 
     # Total employees
     total_employees = Employee.objects.count()
-
+    
+    today = date.today()
+    today_bookings = Booking.objects.filter(created_at__date=today)
     context = {
         'total_bookings': total_bookings,
         'total_branches': total_branches,
         'total_payments': total_payments,
         'total_employees': total_employees,
+        'today_bookings': today_bookings
     }
-    # today_bookings = Booking.objects.filter(booking_date=date.today())
     return render(request, 'admin/dashboard.html', context)

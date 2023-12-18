@@ -69,8 +69,4 @@ urlpatterns = [
     path('invoice/<int:booking_id>/', views.InvoicePDFView.as_view(), name='invoice_pdf'),
     path('invoice/<int:booking_id>/preview/', views.InvoicePreviewView.as_view(), name='invoice_preview'),
 
-
-
-
-
 ]
