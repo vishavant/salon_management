@@ -8,7 +8,7 @@
       <div class="header-body">
         <div class="row align-items-center py-4">
           <div class="col-lg-6 col-7">
-            <h6 class="h2 text-white d-inline-block mb-0">Services</h6>
+            <h6 class="h2 text-white d-inline-block mb-0">Bookings</h6>
           </div>
           <div class="col-lg-6 col-5 text-right">
             <a href="{% url 'salon:booking_create' %}" class="btn btn-sm btn-neutral">New</a>
@@ -61,7 +61,11 @@
                       <span class="price">{{ booking.assigned_person.name }}</span>
                   </td>
                   <td>
-                      <span class="price">{{ booking.payment_status }}</span>
+                    {% if booking.payment_status %}
+                    <span class="badge bg-success text-white">Paid</span>
+                {% else %}
+                    <span class="badge bg-warning text-white">Pending</span>
+                {% endif %}
                   </td>
                     
                  <td class="text-right">

@@ -20,11 +20,13 @@
             <div class="card-body">
               <div class="text-center text-muted">
 
-                {% if msg %}
-                  <p>{{ msg }}</p>
-                {% else %}
-
-                {% endif %}  
+                {% if messages %}
+                <ul class="messages">
+                  {% for message in messages %}
+                    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                  {% endfor %}
+                </ul>
+              {% endif %}
 
               </div>
 

@@ -1,8 +1,11 @@
+import json
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from .models import *
-from .forms import BranchForm, BookingForm, ProductForm, EmployeeForm, SearchForm
+from .forms import BookingForma, BranchForm, BookingForm, ProductForm, EmployeeForm, SearchForm
 from django.db.models import Sum
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 
@@ -59,7 +62,7 @@ def index(request):
 
 
 
-
+@login_required(login_url='salon:login')
 def branch_list(request):
     branches = Branch.objects.all()
     return render(request, 'branch/branch_list.html', {'branches': branches})
@@ -68,6 +71,8 @@ def branch_detail(request, branch_id):
     branch = get_object_or_404(Branch, pk=branch_id)
     return render(request, 'branch/branch_detail.html', {'branch': branch})
 
+
+@login_required(login_url='salon:login')
 def branch_create(request):
     if request.method == 'POST':
         form = BranchForm(request.POST)
@@ -250,20 +255,25 @@ def generate_invoice(request):
 
 
 
+
+@login_required(login_url='salon:login')
 def booking_list(request):
     bookings = Booking.objects.all().order_by('-created_at')
     return render(request, 'bookings/booking_list.html', {'bookings': bookings})
+
 
 def booking_detail(request, booking_id):
     booking = get_object_or_404(Booking, pk=booking_id)
     return render(request, 'bookings/booking_detail.html', {'booking': booking})
 
+
+@login_required(login_url='salon:login')
 def booking_create(request):
     if request.method == 'POST':
         form = BookingForm(request.POST)
         if form.is_valid():
             form.save()
-
+            print(form)
             return redirect('salon:booking_list')
     else:
         form = BookingForm()
@@ -523,3 +533,40 @@ def search_results(request):
 
     context = {'form': form, 'results': results}
     return render(request, 'bookings/search_results.html', context)
+
+
+def dummy_invoice(request):
+    return render(request, "bookings/dummy_invoice.html")
+
+
+
+
+
+from django.http import HttpResponseRedirect
+
+def test_create_booking(request):
+    if request.method == 'POST':
+        form = BookingForma(request.POST)
+        if form.is_valid():
+            # Deserialize the services_amounts field
+            service_amount = json.loads(form.cleaned_data['service_amount'])
+
+            # Remove null values from services_amounts
+            service_amount = {k: v for k, v in service_amount.items() if v is not None}
+
+            total_service_amount = sum(service_amount.values())
+
+            # Save the form and total_service_amount as needed
+            booking = form.save(commit=False)
+            booking.service_amount = total_service_amount
+            booking.save()
+
+            messages.success(request, 'Booking created successfully.')
+            return HttpResponseRedirect('/')
+        else:
+            messages.error(request, 'There was an error in the form.')
+
+    else:
+        form = BookingForma()
+
+    return render(request, 'bookings/test.html', {'form': form})

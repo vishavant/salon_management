@@ -155,3 +155,31 @@ class EmployeeForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     query = forms.CharField(max_length=100, required=False, label='Search')
+
+
+
+
+
+class BookingForma(forms.ModelForm):
+    # ...
+    service_amount = forms.CharField(widget=forms.HiddenInput(), required=False)
+    
+    class Meta:
+        model = Booking
+        fields = ['branch', 'name', 'phone', 'gender', 'services', 'dob', 'location', 'booking_source', 'assigned_person', 'service_amount', 'payment_mode', 'payment_status', 'remark']
+        widgets = {
+            'branch': forms.Select(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'gender': forms.Select(attrs={'class': 'form-control'}),
+            'services': forms.CheckboxSelectMultiple(),
+            'service_amount': forms.HiddenInput(),
+            'dob': forms.DateInput(attrs={'class': 'form-control', 'type':'date'}),
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'booking_source': forms.Select(attrs={'class': 'form-control'}),
+            'assigned_person': forms.Select(attrs={'class': 'form-control'}),
+            
+            'payment_mode': forms.Select(attrs={'class': 'form-control'}),
+            'payment_status': forms.CheckboxInput(attrs={'class': 'form-control'}),
+            'remark': forms.Textarea(attrs={'class': 'form-control'}),
+        }

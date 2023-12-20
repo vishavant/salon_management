@@ -74,4 +74,8 @@ urlpatterns = [
     path('payment_report/', reports.payment_report, name='payment_report'),
     path('search/', views.search_results, name='search_results'),
 
+
+    path('dummy_invoice/', views.dummy_invoice, name='dummy_invoice'),
+    path('test_create_booking/', views.test_create_booking, name='test_create_booking'),
+
 ]

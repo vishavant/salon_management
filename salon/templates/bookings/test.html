@@ -1,0 +1,46 @@
+<!-- Inside your template -->
+<form method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        // Fetch service amounts and set data-amount attribute
+        {% for service in form.services.field.queryset %}
+            var serviceId = '{{ service.id }}';
+            var serviceAmount = '{{ service.service_amount }}';
+            $('input[name="services"][value="' + serviceId + '"]').attr('data-amount', serviceAmount);
+        {% endfor %}
+    });
+    
+    $(document).ready(function () {
+        // Update service_amounts field based on selected services
+        $('input[name="services"]').change(function () {
+            updateServiceAmounts();
+        });
+    
+        function updateServiceAmounts() {
+            var serviceAmounts = {};
+            $('input[name="services"]:checked').each(function () {
+                var serviceId = $(this).val();
+                var serviceAmount = parseFloat($(this).data('amount'));
+    
+                // Check if data-amount is a valid number
+                if (!isNaN(serviceAmount)) {
+                    serviceAmounts[serviceId] = serviceAmount;
+                }
+            });
+    
+            // Update the hidden field with JSON string
+            $('input[name="service_amount"]').val(JSON.stringify(serviceAmounts));
+        }
+    
+        // Call the function initially to set the initial value
+        updateServiceAmounts();
+    });
+    
+</script>
