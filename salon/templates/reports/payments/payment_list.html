@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %}Bookings{% endblock title %}
+{% block title %}Payment{% endblock title %}
 
 {% block content %}
 <div class="header bg-primary pb-6">
@@ -8,10 +8,15 @@
       <div class="header-body">
         <div class="row align-items-center py-4">
           <div class="col-lg-6 col-7">
+            <div class="row">
+              
+            </div>
             <h6 class="h2 text-white d-inline-block mb-0">Payments</h6>
           </div>
           <div class="col-lg-6 col-5 text-right">
-            <a href="{% url 'salon:booking_create' %}" class="btn btn-sm btn-neutral">New</a>
+            <a href="{% url 'salon:booking_create' %}" class="btn btn-sm btn-neutral">Bookings</a>
+            <a href="{% url 'salon:booking_create' %}" class="btn btn-sm btn-neutral">Employee</a>
+            <a href="{% url 'salon:booking_create' %}" class="btn btn-sm btn-neutral">Sales</a>
             {% comment %} <a href="#" class="btn btn-sm btn-neutral">Filters</a> {% endcomment %}
           </div>
         </div>

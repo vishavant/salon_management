@@ -1,5 +1,6 @@
 from django.urls import path
 from salon import views
+from salon import reports
 
 app_name = 'salon'
 
@@ -68,5 +69,9 @@ urlpatterns = [
 
     path('invoice/<int:booking_id>/', views.InvoicePDFView.as_view(), name='invoice_pdf'),
     path('invoice/<int:booking_id>/preview/', views.InvoicePreviewView.as_view(), name='invoice_preview'),
+
+
+    path('payment_report/', reports.payment_report, name='payment_report'),
+    path('search/', views.search_results, name='search_results'),
 
 ]

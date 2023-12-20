@@ -79,7 +79,7 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
+                      <h5 class="card-title text-uppercase text-muted mb-0">Today's Sales</h5>
                       <span class="h2 font-weight-bold mb-0">{{ total_payments }}</span>
                     </div>
                     <div class="col-auto">
@@ -101,7 +101,7 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Staff</h5>
+                      <h5 class="card-title text-uppercase text-muted mb-0">Total Staff</h5>
                       <span class="h2 font-weight-bold mb-0">{{ total_employees }}</span>
                     </div>
                     <div class="col-auto">
@@ -165,7 +165,7 @@
                       {{ booking.branch }}
                     </td>
                     {% empty %}
-            <p>No bookings for today.</p>
+            <p class="text-center">No bookings for today.</p>
                     {% endfor %}
                   </tr>
                   

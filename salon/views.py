@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from .models import *
-from .forms import BranchForm, BookingForm, ProductForm, EmployeeForm
+from .forms import BranchForm, BookingForm, ProductForm, EmployeeForm, SearchForm
 from django.db.models import Sum
 # Create your views here.
 
@@ -295,7 +295,7 @@ def booking_delete(request, booking_id):
 
 def display_payments(request):
     payments = Booking.objects.all().order_by('-created_at')
-    return render(request, "payments/payment_list.html", {'payments':payments})
+    return render(request, "reports/payments/payment_list.html", {'payments':payments})
 
 
 
@@ -397,11 +397,11 @@ def user_logout(request):
 
 def employee_list(request):
     employees = Employee.objects.all()
-    return render(request, 'salon/employee_list.html', {'employees': employees})
+    return render(request, 'employee/employee_list.html', {'employees': employees})
 
 def employee_detail(request, employee_id):
     employee = get_object_or_404(Employee, pk=employee_id)
-    return render(request, 'salon/employee_detail.html', {'employee': employee})
+    return render(request, 'employee/employee_detail.html', {'employee': employee})
 
 def employee_create(request):
     if request.method == 'POST':
@@ -414,7 +414,7 @@ def employee_create(request):
             messages.error(request, 'Error creating employee. Please correct the errors below.')
     else:
         form = EmployeeForm()
-    return render(request, 'salon/employee_form.html', {'form': form, 'action': 'Create'})
+    return render(request, 'employee/employee_form.html', {'form': form, 'action': 'Create'})
 
 def employee_update(request, employee_id):
     employee = get_object_or_404(Employee, pk=employee_id)
@@ -428,13 +428,17 @@ def employee_update(request, employee_id):
             messages.error(request, 'Error updating employee. Please correct the errors below.')
     else:
         form = EmployeeForm(instance=employee)
-    return render(request, 'salon/employee_form.html', {'form': form, 'action': 'Update'})
+    return render(request, 'employee/employee_update.html', {'form': form, 'action': 'Update'})
 
 def employee_delete(request, employee_id):
     employee = get_object_or_404(Employee, pk=employee_id)
-    employee.delete()
-    messages.success(request, 'Employee deleted successfully.')
-    return redirect('salon:employee_list')
+    if request.method == 'POST':
+        employee.delete()
+        messages.success(request, 'Employee deleted successfully.')
+        return redirect('salon:employee_list')
+    return render(request, 'employee/employee_delete.html', {'employee': employee})
+    
+
 
 
 
@@ -483,24 +487,39 @@ from datetime import date
 
 def admin_dashboard(request):
     # Total bookings
-    total_bookings = Booking.objects.count()
+    today = date.today()
+    total_bookings_today = Booking.objects.filter(created_at__date=today).count()
 
     # Total branches
     total_branches = Branch.objects.count()
 
     # Total sum of payments recorded
-    total_payments = Booking.objects.filter(payment_status=True).aggregate(Sum('service_amount'))['service_amount__sum'] or 0
+    total_payments_today = Booking.objects.filter(created_at__date=today, payment_status=True).aggregate(Sum('service_amount'))['service_amount__sum'] or 0
 
     # Total employees
     total_employees = Employee.objects.count()
     
     today = date.today()
-    today_bookings = Booking.objects.filter(created_at__date=today)
+    today_bookings = Booking.objects.filter(created_at__date=today).order_by('-created_at')
     context = {
-        'total_bookings': total_bookings,
+        'total_bookings_today': total_bookings_today,
         'total_branches': total_branches,
-        'total_payments': total_payments,
+        'total_payments_today': total_payments_today,
         'total_employees': total_employees,
         'today_bookings': today_bookings
     }
     return render(request, 'admin/dashboard.html', context)
+
+
+
+def search_results(request):
+    form = SearchForm(request.GET)
+    results = []
+
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        # Perform your search logic here
+        results = Booking.objects.filter(name__icontains=query)  # Update with your search fields
+
+    context = {'form': form, 'results': results}
+    return render(request, 'bookings/search_results.html', context)

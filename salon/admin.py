@@ -65,4 +65,9 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('product_id', 'branch', 'product_name', 'quantity', 'created_at', 'updated_at')
 
 
-admin.site.register(Employee)
+@admin.register(Employee)
+class EmployeeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'phone','branch' )
+
+
+

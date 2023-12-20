@@ -1,13 +1,32 @@
 <!-- service_category_detail.html -->
+{% extends "layouts/base.html" %}
 
-<h2>Service Category Details</h2>
+{% block content %}
+<div class="container-fluid">
+    <div class="card mt-2">
+        <div class="card-title">
+            <h2 class="text-center mt-5">Service Category Details</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p><strong>Name:</strong> {{ category.category_name }}</p>
+            <p><strong>Branch:</strong> {{ category.branch.branch_name }}</p>
+            <p><strong>Description:</strong> {{ category.description }}</p>
+            <p><strong>Created At:</strong> {{ category.created_at }}</p>
+            <p><strong>Updated At:</strong> {{ category.updated_at }}</p>
+                </div>
+                <div class="col-sm-6">
+                    <a href="{% url 'salon:service_category_update' category.pk %}"class="btn btn-warning btn-sm">Update</a>
+                    <a href="{% url 'salon:service_category_delete' category.pk %}"class="btn btn-danger btn-sm">Delete</a>
+                    <a href="{% url 'salon:service_category_list' %}"class="btn btn-primary btn-sm">Back to List</a>
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
 
-<p><strong>Name:</strong> {{ category.category_name }}</p>
-<p><strong>Branch:</strong> {{ category.branch.branch_name }}</p>
-<p><strong>Description:</strong> {{ category.description }}</p>
-<p><strong>Created At:</strong> {{ category.created_at }}</p>
-<p><strong>Updated At:</strong> {{ category.updated_at }}</p>
+{% endblock content %}
 
-<a href="{% url 'salon:service_category_update' category.pk %}">Update</a>
-<a href="{% url 'salon:service_category_delete' category.pk %}">Delete</a>
-<a href="{% url 'salon:service_category_list' %}">Back to List</a>
+
+

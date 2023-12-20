@@ -59,6 +59,14 @@ class ServiceCategoryForm(forms.ModelForm):
         model = ServiceCategory
         fields = ['branch', 'category_name', 'description']
 
+        widgets = {
+            'branch': forms.Select(attrs={'class': 'form-control'}),
+            'category_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+
+        
+
 
 class ServiceForm(forms.ModelForm):
     class Meta:
@@ -80,12 +88,21 @@ class ServicePackageForm(forms.ModelForm):
         model = ServicePackage
         fields = ['package_name', 'services', 'price', 'thumbanail']
 
+        widgets = {
+            'package_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'services': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'thumbnail': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
+
+        
 
 
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
         fields = ['branch', 'name', 'phone', 'gender', 'services', 'dob', 'location', 'booking_source', 'assigned_person', 'service_amount', 'payment_mode', 'payment_status','remark']
+        
         widgets = {
             'branch': forms.Select(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -98,11 +115,9 @@ class BookingForm(forms.ModelForm):
             'assigned_person': forms.Select(attrs={'class': 'form-control'}),
             'service_amount': forms.TextInput(attrs={'class': 'form-control'}),
             'payment_mode': forms.Select(attrs={'class': 'form-control'}),
-            'payment_status': forms.Select(attrs={'class': 'form-control'}),
+            'payment_status': forms.CheckboxInput(attrs={'class': 'form-control'}),
             'remark': forms.Textarea(attrs={'class': 'form-control'}),
         }
-
-
 
 
 
@@ -127,4 +142,16 @@ class ProductForm(forms.ModelForm):
 class EmployeeForm(forms.ModelForm):
     class Meta:
         model = Employee
-        fields = ['branch', 'name', 'phone', 'gender', 'address']
+        fields = ['branch', 'name', 'phone', 'gender', 'address', 'status']
+        widgets = {
+            'branch': forms.Select(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'gender': forms.Select(attrs={'class': 'form-control'}),
+            'address': forms.Textarea(attrs={'class': 'form-control'}),
+            # 'status': forms.CheckboxInput(attrs={}),
+        }
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField(max_length=100, required=False, label='Search')

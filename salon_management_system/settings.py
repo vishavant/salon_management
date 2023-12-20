@@ -85,6 +85,7 @@ WSGI_APPLICATION = 'salon_management_system.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+#For Development Databases
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

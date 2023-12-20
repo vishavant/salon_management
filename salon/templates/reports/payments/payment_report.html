@@ -1,0 +1,112 @@
+<!-- payment_report.html -->
+
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="table-heading">
+        <div class="row">
+            <div class="col-sm-3 mt-2">
+                <h2>Payments</h2>
+            </div>
+            <div class="col-sm-9">
+                <form method="get" class="d-flex justify-content-end align-items-center ">
+                    <div class="mb-3 p-2">
+                        <label for="start_date" class="form-label">Start Date:</label>
+                        <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date|default:'' }}">
+                    </div>
+            
+                    <div class="mb-3 p-2">
+                        <label for="end_date" class="form-label">End Date:</label>
+                        <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date|default:'' }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2" style="height: 40px">Apply</button>
+                </form>
+            </div>
+        </div>
+        <div class="container text-center">
+            <h2>Reports: Payment Summary</h2>
+            <span>start date to end date</span>
+        </div>
+        <div class="container">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                  <div class="row">
+                    <div class="col-sm-6">
+                        <h3 class="mb-0">Payment List</h3>
+                    </div>
+                    <div class="col-sm-6">
+                        <h3 class="mb-0 text-end">Total Collection: </h3>
+                    </div>
+                  </div>
+                </div>
+                <!-- Light table -->
+                <div class="table-responsive">
+                  <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr>
+                          
+                        <th scope="col" class="sort" data-sort="image">Date</th>
+                        <th scope="col" class="sort" data-sort="image">Name</th>
+                        {% comment %} <th scope="col" class="sort" data-sort="name">Service Name</th> {% endcomment %}
+                        <th scope="col">Service</th>
+                        <th scope="col">Assigened Person</th>
+                        <th scope="col">Service Amout</th>
+                        <th scope="col">Payment Mode</th>
+                        <th scope="col">Payment Status</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody class="list">
+                      <tr>
+                          {% for payment in payments %}
+                      <td>{{ payment.created_at|date:"d-m-Y" }}</td>
+                        <th scope="row">
+                          <a href="#">{{ payment.name }}</a>
+                        </th>
+                        <td>
+                            <span class="service">{{ payment.service }}</span>
+                        </td>
+                        <td>
+                            <span class="price">{{ payment.assigned_person.name }}</span>
+                        </td>
+                        <td>
+                            <span class="price">{{ payment.service_amount }}</span>
+                        </td>
+                        <td>
+                            <span class="price">{{ payment.payment_mode }}</span>
+                        </td>
+                        <td>
+                            <span class="price">{{ payment.payment_status }}</span>
+                        </td>
+                          
+                       <td class="text-right">
+                          <div class="dropdown">
+                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="fas fa-ellipsis-v"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                              <a class="dropdown-item" href="#">Download Reciept</a>
+                              <a class="dropdown-item" href="#">Delete</a>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                      
+                    </tbody>
+                  </table>
+                </div>      
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endblock javascripts %}

@@ -1,5 +1,6 @@
 <!-- booking_form.html -->
 {% extends "layouts/base.html" %}
+{% load static %}
 
 {% block title %}
 Create Booking
@@ -20,16 +21,24 @@ Create Booking
                         {% csrf_token %}
                         {% for fm in form.visible_fields|slice:":5" %}
                             <div class="form-group mb-2">
-                                {{ fm.label_tag }} {{ fm }} <small class="text-danger">{{ fm.errors|striptags }}</small>
+                                {{ fm.label_tag }} {{ fm }} 
+                                <small class="text-danger">
+                                    {{ fm.errors|striptags }}
+                                </small>
                             </div>
+                            
                         {% endfor %}
+                        
                 </div>
                 <div class="col-md-6">
                     <h3><span>Additional Information</span></h3>
                     <hr>
                     {% for fm in form.visible_fields|slice:"5:" %}
                         <div class="form-group mb-2">
-                            {{ fm.label_tag }} {{ fm }} <small class="text-danger">{{ fm.errors|striptags }}</small>
+                            {{ fm.label_tag }} {{ fm }}
+                            <small class="text-danger">
+                                {{ fm.errors|striptags }}
+                            </small>
                         </div>
                     {% endfor %}
                     <button type="submit" class="btn btn-primary">{{ action }}</button>
@@ -49,6 +58,8 @@ Create Booking
 
 {% block javascripts %}
 <!-- Include jQuery in your template -->
+{% comment %} 
+<script src="{% static "salon/js/form.js" %}"></script> {% endcomment %}
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -74,7 +85,6 @@ function calculateSum() {
   // Call the function initially to set the initial value
   calculateSum();
 </script>
-
 
 
 {% endblock javascripts %}

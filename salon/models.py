@@ -1,6 +1,7 @@
 from decimal import Decimal
 from django.db import models
 from django.utils import timezone
+from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
@@ -31,6 +32,7 @@ class Employee(models.Model):
     phone = models.IntegerField(blank=True, null=True)
     gender = models.CharField(max_length=100, choices=GENDER)
     address = models.TextField(blank=True, null=True)
+    status = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -112,7 +114,7 @@ class Booking(models.Model):
     booking_source = models.CharField(max_length=200, choices=BOOKING_SOURCE, blank=True, null=True)
     assigned_person = models.ForeignKey(Employee, on_delete=models.CASCADE)
     service_amount = models.IntegerField(blank=True, null=True)
-    payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS)
+    payment_status = models.BooleanField(default=False)
     payment_mode = models.CharField(max_length=50, choices=PAYMENT_MODE, blank=True, null=True)
     remark = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -121,21 +123,13 @@ class Booking(models.Model):
     def __str__(self):
         return self.name
     
-    def save(self, *args, **kwargs):
-        # Save the Payment object first to get a primary key
-        super().save(*args, **kwargs)
+    def calculate_total_service_amount(self):
+        """
+        Calculate the total service amount for the booking.
+        """
+        total_amount = self.services.aggregate(Sum('service_amount'))['service_amount__sum']
+        return total_amount or 0
 
-        # Calculate the total amount based on the selected services
-        total_amount = Decimal('0.00')
-        for ser in self.services.all():
-            total_amount += ser.service_amount
-
-        # Update the amount field with the calculated total
-        self.amount = total_amount
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
 
 
 

@@ -1,0 +1,16 @@
+<!-- search_results.html -->
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+    <h2>Search Results</h2>
+    {{ form }}
+    {% if results %}
+        <ul>
+            {% for result in results %}
+                <li>{{ result.name }}</li>  <!-- Update with your model fields -->
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+{% endblock %}
