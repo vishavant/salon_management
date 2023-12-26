@@ -34,11 +34,11 @@ urlpatterns = [
     path('service_packages/<int:package_id>/update/', views.service_package_update, name='service_package_update'),
     path('service_packages/<int:package_id>/delete/', views.service_package_delete, name='service_package_delete'),
 
-    # path('users/', views.user_list, name='user_list'),
-    # path('users/<int:user_id>/', views.user_detail, name='user_detail'),
-    # path('users/create/', views.user_create, name='user_create'),
-    # path('users/<int:user_id>/update/', views.user_update, name='user_update'),
-    # path('users/<int:user_id>/delete/', views.user_delete, name='user_delete'),
+    path('users/', views.UserListView.as_view(), name='user_list'),
+    path('user/<int:pk>/', views.UserDetailView.as_view(), name='user_detail'),
+    path('user/new/', views.UserCreateView.as_view(), name='user_create'),
+    path('user/<int:pk>/edit/', views.UserUpdateView.as_view(), name='user_edit'),
+    path('user/<int:pk>/delete/', views.UserDeleteView.as_view(), name='user_delete'),
 
     path('bookings/', views.booking_list, name='booking_list'),
     path('bookings/<int:booking_id>/', views.booking_detail, name='booking_detail'),

@@ -1,45 +1,30 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
+from django.contrib.auth.models import User
 from .models import Employee, Branch, Service, ServiceCategory, Booking, ServicePackage, Product
 from django.forms import BaseInlineFormSet
 
-# class CustomUserCreationForm(UserCreationForm):
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control'}),
+        }
 
-#     class Meta:
-#         model = User
-#         fields = ("name", "phone", "email", "city", 'is_branch_manager', 'is_service_person')
-
-
-# class CustomUserChangeForm(UserChangeForm):
-
-#     class Meta:
-#         model = User
-#         fields = ("name", "phone", "email", "city", 'is_branch_manager', 'is_service_person')
-
-
-# from django.db import transaction
-
-
-# class ServiceSignUpForm(UserCreationForm):
-#     interests = forms.ModelMultipleChoiceField(
-#         queryset=ServicePerson.objects.all(),
-#         widget=forms.CheckboxSelectMultiple,
-#         required=True
-#     )
-
-#     class Meta(UserCreationForm.Meta):
-#         model = User
-
-#     @transaction.atomic
-#     def save(self):
-#         user = super().save(commit=False)
-#         user.is_student = True
-#         user.save()
-#         student = Student.objects.create(user=user)
-#         student.interests.add(*self.cleaned_data.get('interests'))
-#         return user
-
-
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email')
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control'}),
+        }
 #-----------------------------------------------------------------------
 
 class BranchForm(forms.ModelForm):
@@ -115,7 +100,7 @@ class BookingForm(forms.ModelForm):
             'assigned_person': forms.Select(attrs={'class': 'form-control'}),
             'service_amount': forms.TextInput(attrs={'class': 'form-control'}),
             'payment_mode': forms.Select(attrs={'class': 'form-control'}),
-            'payment_status': forms.CheckboxInput(attrs={'class': 'form-control'}),
+            'payment_status': forms.CheckboxInput(attrs={}),
             'remark': forms.Textarea(attrs={'class': 'form-control'}),
         }
 

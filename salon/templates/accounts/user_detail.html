@@ -10,23 +10,14 @@
 <div class="container-fluid">
   <div class="card">
     <div class="card-body">
-      <h2>User Details</h2>
+      <!-- user_management/templates/user_detail.html -->
 
-<p><strong>Name:</strong> {{ user.name }}</p>
-<p><strong>Email:</strong> {{ user.email }}</p>
-<p><strong>Phone:</strong> {{ user.phone }}</p>
-<p><strong>City:</strong> {{ user.city }}</p>
-<p><strong>Roles:</strong>
-  {% if user.is_superadmin %}Super Admin{% endif %}
-  {% if user.is_branch_manager %}Branch Manager{% endif %}
-  {% if user.is_service_person %}Service Person{% endif %}
-</p>
-<p><strong>Is Staff:</strong> {{ user.is_staff }}</p>
-<p><strong>Is Active:</strong> {{ user.is_active }}</p>
-<p><strong>Date Joined:</strong> {{ user.date_joined }}</p>
-
-<a href="{% url 'salon:user_update' user.pk %}">Update</a>
-<a href="{% url 'salon:user_delete' user.pk %}">Delete</a>
+  <h2>User Detail</h2>
+  <p>Username: {{ object.username }}</p>
+  <p>Email: {{ object.email }}</p>
+  <!-- Add more details as needed -->
+  <a href="{% url 'salon:user_edit' object.id %}">Edit</a>
+  <a href="{% url 'salon:user_delete' object.id %}">Delete</a>
 <a href="{% url 'salon:user_list' %}">Back to List</a>
     </div>
   </div>

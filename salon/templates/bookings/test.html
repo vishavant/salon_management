@@ -1,46 +1,76 @@
-<!-- Inside your template -->
-<form method="post" action="" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Booking</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Create Booking</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Other form fields -->
+
+        <div class="form-group">
+            <label for="{{ form.services.id_for_label }}">Services</label>
+            {% for service in form.services %}
+                <div class="form-check">
+                    <input
+                        type="checkbox"
+                        name="{{ form.services.name }}"
+                        value="{{ service.value }}"
+                        id="id_{{ form.services.id_for_label }}"
+                        data-amount="{{ service.data.amount }}"
+                        {% if service.checked %}checked{% endif %}
+                    >
+                    <label class="form-check-label" for="id_{{ form.services.id_for_label }}">
+                        {{ service.choice_label }} - ${{ service.data.amount }}
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Other form fields -->
+
+        <div class="form-group">
+            <label for="{{ form.service_amount.id_for_label }}">Service Amount</label>
+            {{ form.service_amount }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    $(document).ready(function () {
-        // Fetch service amounts and set data-amount attribute
-        {% for service in form.services.field.queryset %}
-            var serviceId = '{{ service.id }}';
-            var serviceAmount = '{{ service.service_amount }}';
-            $('input[name="services"][value="' + serviceId + '"]').attr('data-amount', serviceAmount);
-        {% endfor %}
-    });
-    
-    $(document).ready(function () {
-        // Update service_amounts field based on selected services
-        $('input[name="services"]').change(function () {
-            updateServiceAmounts();
+<script>
+    // Function to calculate the sum
+    function calculateSum() {
+        var sum = 0;
+
+        // Iterate over each checked checkbox and add its data-amount to the sum
+        $('input[name="{{ form.services.name }}"]:checked').each(function () {
+            sum += parseFloat($(this).data('amount'));
         });
-    
-        function updateServiceAmounts() {
-            var serviceAmounts = {};
-            $('input[name="services"]:checked').each(function () {
-                var serviceId = $(this).val();
-                var serviceAmount = parseFloat($(this).data('amount'));
-    
-                // Check if data-amount is a valid number
-                if (!isNaN(serviceAmount)) {
-                    serviceAmounts[serviceId] = serviceAmount;
-                }
-            });
-    
-            // Update the hidden field with JSON string
-            $('input[name="service_amount"]').val(JSON.stringify(serviceAmounts));
-        }
-    
-        // Call the function initially to set the initial value
-        updateServiceAmounts();
+
+        // Update the service_amount field with the calculated sum
+        $('#id_{{ form.service_amount.id_for_label }}').val(sum.toFixed(2));
+    }
+
+    // Attach an event listener to the service checkboxes
+    $('input[name="{{ form.services.name }}"]').change(function () {
+        calculateSum();
     });
-    
+
+    // Call the function initially to set the initial value
+    calculateSum();
 </script>
+
+</body>
+</html>

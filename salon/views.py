@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from .models import *
-from .forms import BookingForma, BranchForm, BookingForm, ProductForm, EmployeeForm, SearchForm
+from .forms import BookingForma, BranchForm, BookingForm, CustomUserChangeForm, CustomUserCreationForm, ProductForm, EmployeeForm, SearchForm
 from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
 
@@ -124,8 +124,10 @@ def service_category_create(request):
         form = ServiceCategoryForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Service Category Created')
             return redirect('salon:service_category_list')
     else:
+        messages.error(request, 'Failed to create category')
         form = ServiceCategoryForm()
 
     return render(request, 'services/service_category_form.html', {'form': form, 'action': 'Create'})
@@ -570,3 +572,32 @@ def test_create_booking(request):
         form = BookingForma()
 
     return render(request, 'bookings/test.html', {'form': form})
+
+
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+
+class UserListView(ListView):
+    model = User
+    template_name = 'accounts/user_list.html'
+
+class UserDetailView(DetailView):
+    model = User
+    template_name = 'accounts/user_detail.html'
+
+class UserCreateView(CreateView):
+    model = User
+    form_class = CustomUserCreationForm
+    template_name = 'accounts/user_form.html'
+    success_url = reverse_lazy('salon:user_list')
+
+class UserUpdateView(UpdateView):
+    model = User
+    form_class = CustomUserChangeForm
+    template_name = 'accounts/user_form.html'
+    success_url = reverse_lazy('salon:user_list')
+
+class UserDeleteView(DeleteView):
+    model = User
+    template_name = 'accounts/user_confirm_delete.html'
+    success_url = reverse_lazy('salon:user_list')

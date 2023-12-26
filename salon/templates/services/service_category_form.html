@@ -1,5 +1,4 @@
-
-<!-- service_category_form.html -->
+<!-- service_form.html -->
 {% extends "layouts/base.html" %}
 
 
@@ -7,14 +6,22 @@
 <div class="container-fluid mt-2">
   <div class="card">
       <div class="card-title">
-          <h2 class="text-center mt-2">{{ action }} Service Category</h2>
+          <h2 class="text-center mt-2">Add Service</h2>
           
       </div>
       <div class="card-body">
           <div class="row">
-              
               <div class="col-md-6">
-                  {% for fm in form.visible_fields %}
+                  <form action="" method="post" enctype="multipart/form-data" class="">
+                      {% csrf_token %}
+                      {% for fm in form.visible_fields|slice:":5" %}
+                          <div class="form-group mb-3">
+                              {{ fm.label_tag }} {{ fm }} <small class="text-danger">{{ fm.errors|striptags }}</small>
+                          </div>
+                      {% endfor %}
+              </div>
+              <div class="col-md-6">
+                  {% for fm in form.visible_fields|slice:"5:" %}
                       <div class="form-group mb-3">
                           {{ fm.label_tag }} {{ fm }} <small class="text-danger">{{ fm.errors|striptags }}</small>
                       </div>

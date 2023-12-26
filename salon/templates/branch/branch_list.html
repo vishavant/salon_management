@@ -56,7 +56,11 @@
                     {{ branch.location }}
                   </td>
                   <td>
-                      <span class="service">{{ branch.status }}</span>
+                    {% if branch.status %}
+                    <span class="badge bg-success text-white">Active</span>
+                {% else %}
+                    <span class="badge bg-warning text-white">Inactive</span>
+                {% endif %}
                   </td>
                   
                     
