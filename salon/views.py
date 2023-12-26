@@ -274,8 +274,10 @@ def booking_create(request):
     if request.method == 'POST':
         form = BookingForm(request.POST)
         if form.is_valid():
+            selected_services = form.cleaned_data.get('services')
+            service_amount = sum(service.service_amount for service in selected_services)
+            form.instance.service_amount = service_amount
             form.save()
-            print(form)
             return redirect('salon:booking_list')
     else:
         form = BookingForm()

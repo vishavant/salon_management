@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 class Branch(models.Model):
     branch_id = models.AutoField(primary_key=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
     branch_name = models.CharField(max_length=200)
     location = models.CharField(max_length=200)
     status = models.BooleanField(default=True)
@@ -66,7 +66,7 @@ class Service(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.service_name
+        return f"{self.service_name} - Rs.{self.service_amount}"
 
 
 class ServicePackage(models.Model):

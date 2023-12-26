@@ -86,7 +86,7 @@ class ServicePackageForm(forms.ModelForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['branch', 'name', 'phone', 'gender', 'services', 'dob', 'location', 'booking_source', 'assigned_person', 'service_amount', 'payment_mode', 'payment_status','remark']
+        fields = ['branch', 'name', 'phone', 'gender', 'services', 'dob', 'location', 'booking_source', 'assigned_person', 'payment_mode', 'payment_status','remark']
         
         widgets = {
             'branch': forms.Select(attrs={'class': 'form-control'}),
@@ -98,7 +98,7 @@ class BookingForm(forms.ModelForm):
             'location': forms.TextInput(attrs={'class': 'form-control'}),
             'booking_source': forms.Select(attrs={'class': 'form-control'}),
             'assigned_person': forms.Select(attrs={'class': 'form-control'}),
-            'service_amount': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'service_amount': forms.TextInput(attrs={'class': 'form-control', 'readonly': 'readonly'}),
             'payment_mode': forms.Select(attrs={'class': 'form-control'}),
             'payment_status': forms.CheckboxInput(attrs={}),
             'remark': forms.Textarea(attrs={'class': 'form-control'}),

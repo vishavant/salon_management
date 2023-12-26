@@ -40,7 +40,7 @@ Create Booking
                                 {{ fm.errors|striptags }}
                             </small>
                         </div>
-                    {% endfor %}
+                        {% endfor %}
                     <button type="submit" class="btn btn-primary">{{ action }}</button>
                     <a href="{% url 'salon:booking_list' %}" class="btn btn-secondary">Back to List</a>
                     {% if form.non_field_errors %}
